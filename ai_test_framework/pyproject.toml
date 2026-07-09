@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nextgen-test-automation"
+version = "0.1.0"
+description = "AI-powered no-code self-healing test automation framework scaffold"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Automation Team" }]
+dependencies = []
+
+[project.optional-dependencies]
+api = ["fastapi>=0.112", "uvicorn>=0.30"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
