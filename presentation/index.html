@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>NextGen AI Test Automation Framework — Roadmap Presentation</title>
+
+  <!-- reveal.js from CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reset.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/theme/night.min.css">
+
+  <style>
+    :root {
+      --accent: #4fc3f7;
+      --accent2: #80cbc4;
+      --warn: #ffb74d;
+      --ok: #81c784;
+      --bad: #ef9a9a;
+    }
+
+    .reveal {
+      font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    .reveal h1 { font-size: 1.9em; color: var(--accent); }
+    .reveal h2 { font-size: 1.4em; color: var(--accent2); }
+    .reveal h3 { font-size: 1.1em; color: #e0e0e0; }
+
+    /* ── title slide ── */
+    .title-slide .tagline { font-size: 1.05em; color: #b0bec5; margin-top: 0.4em; }
+    .title-slide .meta    { margin-top: 1.8em; font-size: 0.75em; color: #78909c; }
+
+    /* ── tables ── */
+    .reveal table { font-size: 0.72em; border-collapse: collapse; width: 100%; }
+    .reveal table th { background: #1a3a5c; color: var(--accent); padding: 6px 10px; text-align: left; }
+    .reveal table td { padding: 5px 10px; border-bottom: 1px solid #37474f; vertical-align: top; }
+    .reveal table tr:nth-child(even) td { background: rgba(255,255,255,0.04); }
+
+    /* ── pill badges ── */
+    .pill {
+      display: inline-block; border-radius: 12px; padding: 2px 10px;
+      font-size: 0.75em; font-weight: 600; margin: 2px;
+    }
+    .pill-blue   { background: #0d47a1; color: #90caf9; }
+    .pill-teal   { background: #004d40; color: #80cbc4; }
+    .pill-orange { background: #e65100; color: #ffccbc; }
+    .pill-green  { background: #1b5e20; color: #a5d6a7; }
+    .pill-purple { background: #4a148c; color: #ce93d8; }
+
+    /* ── phase timeline bar ── */
+    .timeline { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; margin-top: 0.6em; }
+    .phase-box {
+      border-radius: 8px; padding: 10px 8px; text-align: center;
+      font-size: 0.62em; line-height: 1.4;
+    }
+    .ph0 { background: #1a237e; border: 1px solid #5c6bc0; }
+    .ph1 { background: #1b5e20; border: 1px solid #66bb6a; }
+    .ph2 { background: #4a148c; border: 1px solid #ab47bc; }
+    .ph3 { background: #bf360c; border: 1px solid #ff7043; }
+    .ph4 { background: #37474f; border: 1px solid #90a4ae; }
+    .phase-box strong { display: block; font-size: 1.15em; margin-bottom: 4px; }
+    .phase-box span   { color: #b0bec5; }
+
+    /* ── checklist bullets ── */
+    ul.checks { list-style: none; padding: 0; font-size: 0.82em; }
+    ul.checks li::before { content: "✅ "; }
+
+    /* ── two-column layout ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2em; }
+
+    /* ── role cards ── */
+    .role-card {
+      background: rgba(255,255,255,0.06); border-radius: 10px;
+      padding: 14px; font-size: 0.76em; border-left: 4px solid var(--accent);
+    }
+    .role-card.m2 { border-left-color: var(--accent2); }
+    .role-card.m3 { border-left-color: var(--warn); }
+    .role-card h3 { margin: 0 0 6px; font-size: 1em; }
+    .role-card ul { margin: 0; padding-left: 1.2em; }
+    .role-card ul li { margin-bottom: 3px; }
+
+    /* ── risk table colours ── */
+    .risk-high   { color: var(--bad); font-weight: 600; }
+    .risk-med    { color: var(--warn); }
+    .risk-ok     { color: var(--ok); }
+
+    /* ── quote box ── */
+    .quote-box {
+      border-left: 4px solid var(--accent); padding: 12px 18px;
+      background: rgba(79,195,247,0.08); border-radius: 4px;
+      font-size: 0.9em; font-style: italic; color: #e0e0e0;
+    }
+
+    /* ── footer ── */
+    .slide-footer {
+      position: absolute; bottom: -0.8em; right: 0;
+      font-size: 0.45em; color: #546e7a;
+    }
+
+    /* ── metric row ── */
+    .metric-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 0.5em; }
+    .metric-card {
+      background: rgba(255,255,255,0.06); border-radius: 10px;
+      padding: 14px; text-align: center; font-size: 0.8em;
+    }
+    .metric-card .num { font-size: 2em; font-weight: 700; color: var(--accent); }
+    .metric-card .lbl { color: #90a4ae; margin-top: 4px; }
+
+    /* adjust section padding */
+    .reveal .slides section { padding: 1.2em 2em; }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 1 — TITLE
+═══════════════════════════════════════════════════ -->
+<section class="title-slide">
+  <br>
+  <h1>NextGen AI Test Automation<br>Framework</h1>
+  <p class="tagline">No-Code · Self-Healing · Multi-Platform · Industry-Ready</p>
+  <hr style="border-color:#37474f;margin:1.2em auto;width:60%">
+  <p style="font-size:0.85em;color:#90caf9;">
+    Roadmap Presentation &nbsp;|&nbsp; July 2026 – March 2027
+  </p>
+  <p class="meta">Prepared for: Management &amp; Development Team &nbsp;|&nbsp; July 2026</p>
+  <div class="slide-footer">Use arrow keys or swipe to navigate · Press F for full screen · Press S for speaker notes</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 2 — AGENDA
+═══════════════════════════════════════════════════ -->
+<section>
+  <h2>Agenda</h2>
+  <ol style="font-size:0.9em;line-height:2;">
+    <li>Why we are building this</li>
+    <li>Competitive landscape &amp; our differentiation</li>
+    <li>Technology stack</li>
+    <li>Team &amp; roles</li>
+    <li>Phased roadmap (Jul 2026 – Mar 2027)</li>
+    <li>Risks &amp; mitigations</li>
+    <li>Success metrics</li>
+    <li>Next steps &amp; decision points</li>
+  </ol>
+  <aside class="notes">Welcome everyone. This session will walk through our plan to build the NextGen Test Automation framework from July 2026 to March 2027. We will cover what we are building, why, how the team is structured, and what milestones we will hit each phase.</aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 3 — THE PROBLEM
+═══════════════════════════════════════════════════ -->
+<section>
+  <h2>The Problem We Are Solving</h2>
+  <div class="two-col" style="margin-top:0.6em;">
+    <div>
+      <h3 style="color:var(--bad);">Today's Pain Points</h3>
+      <ul style="font-size:0.8em;line-height:1.8;">
+        <li>Test automation <strong>requires coding expertise</strong></li>
+        <li>Locators break after every UI change — <strong>manual fixing</strong></li>
+        <li>Separate tools for Web, Desktop, API, DB — <strong>fragmented</strong></li>
+        <li>Test case authoring is slow and expensive</li>
+        <li>No industry-specific intelligence out-of-the-box</li>
+        <li>AI features in existing tools are bolt-on, not core</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="color:var(--ok);">Our Vision</h3>
+      <ul class="checks" style="line-height:1.9;">
+        <li>Zero code required — anyone can automate</li>
+        <li>AI auto-generates test cases from a walk-through</li>
+        <li>Self-healing locators using vision AI</li>
+        <li>One platform for all test types</li>
+        <li>Industry templates out-of-the-box</li>
+        <li>Python-native, open ecosystem</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">The core problem we are addressing is the high barrier to entry for test automation and the constant maintenance burden. Our tool democratises testing.</aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 4 — COMPETITIVE LANDSCAPE
+═══════════════════════════════════════════════════ -->
+<section>
+  <h2>Competitive Landscape</h2>
+  <table>
+    <thead>
+      <tr><th>Tool</th><th>Strengths</th><th>Critical Gaps</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Testim</strong></td><td>AI locator healing, web focus</td><td class="risk-high">No desktop / DB, costly</td></tr>
+      <tr><td><strong>Mabl</strong></td><td>Auto-healing, CI/CD</td><td class="risk-high">Web only, limited no-code</td></tr>
+      <tr><td><strong>Applitools</strong></td><td>Visual AI testing</td><td class="risk-high">Narrow scope (visual only)</td></tr>
+      <tr><td><strong>Tricentis Tosca</strong></td><td>Model-based, enterprise</td><td class="risk-med">Expensive, not truly no-code</td></tr>
+      <tr><td><strong>Functionize</strong></td><td>NLP test authoring</td><td class="risk-med">Limited API / DB testing</td></tr>
+      <tr><td><strong>TestRigor</strong></td><td>Plain English tests</td><td class="risk-med">No desktop / DB</td></tr>
+      <tr><td><strong>Katalon Studio</strong></td><td>All-in-one, free tier</td><td class="risk-med">Still requires coding</td></tr>
+      <tr><td><strong>Healenium</strong></td><td>Open-source self-healing</td><td class="risk-med">Requires coding knowledge</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:0.6em;font-size:0.7em;color:#78909c;">
+    ⚠ No existing tool covers Web · Desktop · API · DB together with AI test generation + self-healing + true no-code.
+  </p>
+  <aside class="notes">We studied the top tools in this space. The key takeaway: no single tool offers the combination of multi-platform coverage, true no-code operation, AI auto-generation, and self-healing. This is our market opportunity.</aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 5 — OUR DIFFERENTIATION
+═══════════════════════════════════════════════════ -->
+<section>
+  <h2>Our Next-Gen Differentiation</h2>
+  <div style="margin-top:0.6em;display:grid;grid-template-columns:1fr 1fr;gap:0.9em;font-size:0.8em;">
+    <div style="background:rgba(79,195,247,0.1);border-radius:8px;padding:14px;">
+      <strong style="color:var(--accent);">🤖 AI-First Architecture</strong>
+      <ul style="margin-top:8px;line-height:1.7;">
+        <li>Walk-through → test cases auto-generated by LLM</li>
+        <li>Natural language test authoring</li>
+        <li>AI-powered failure classification</li>
+        <li>Stale test detection &amp; auto-update</li>
+      </ul>
+    </div>
+    <div style="background:rgba(128,203,196,0.1);border-radius:8px;padding:14px;">
+      <strong style="color:var(--accent2);">🔧 Self-Healing Engine</strong>
+      <ul style="margin-top:8px;line-height:1.7;">
+        <li>DOM fingerprinting (primary)</li>
+        <li>Visual hash matching (secondary)</li>
+        <li>Semantic NLP fallback (tertiary)</li>
+        <li>Human review panel before auto-apply</li>
+      </ul>
+    </div>
+    <div style="background:rgba(255,183,77,0.1);border-radius:8px;padding:14px;">
+      <strong style="color:var(--warn);">🌐 True Multi-Platform</strong>
+      <ul style="margin-top:8px;line-height:1.7;">
+        <li>Web (Playwright + Selenium)</li>
+        <li>Desktop (pywinauto + OpenCV)</li>
+        <li>REST / GraphQL APIs</li>
+        <li>SQL / NoSQL Databases</li>
+      </ul>
+    </div>
+    <div style="background:rgba(129,199,132,0.1);border-radius:8px;padding:14px;">
+      <strong style="color:var(--ok);">🏭 Industry Intelligence</strong>
+      <ul style="margin-top:8px;line-height:1.7;">
+        <li>BFSI · Healthcare · Manufacturing</li>
+        <li>e-Commerce · Retail · Utilities</li>
+        <li>Domain test template libraries</li>
+        <li>Compliance-aware assertions</li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">These four pillars are what make our tool genuinely next-generation. Competitors have pieces of this; we are combining all four in a single Python-native platform.</aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 6 — TECH STACK
+═══════════════════════════════════════════════════ -->
+<section>
+  <h2>Technology Stack</h2>
+  <table>
+    <thead><tr><th>Layer</th><th>Technology</th></tr></thead>
+    <tbody>
+      <tr><td>Core Language</td><td><span class="pill pill-blue">Python 3.11+</span></td></tr>
+      <tr><td>AI / LLM Engine</td><td><span class="pill pill-purple">LangChain</span> <span class="pill pill-purple">GPT-4o API</span> <span class="pill pill-purple">LLaMA (local)</span></td></tr>
+      <tr><td>Web Testing</td><td><span class="pill pill-teal">Playwright</span> <span class="pill pill-teal">Selenium (fallback)</span></td></tr>
+      <tr><td>Desktop Testing</td><td><span class="pill pill-teal">pywinauto</span> <span class="pill pill-teal">PyAutoGUI</span> <span class="pill pill-teal">OpenCV</span></td></tr>
+      <tr><td>API Testing</td><td><span class="pill pill-teal">httpx</span> <span class="pill pill-teal">pydantic</span></td></tr>
+      <tr><td>Database Testing</td><td><span class="pill pill-teal">SQLAlchemy</span> <span class="pill pill-teal">psycopg2 / pymysql</span></td></tr>
+      <tr><td>No-Code UI</td><td><span class="pill pill-orange">React</span> <span class="pill pill-orange">FastAPI</span></td></tr>
+      <tr><td>Reporting</td><td><span class="pill pill-green">Allure Reports</span> <span class="pill pill-green">Custom HTML</span></td></tr>
+      <tr><td>Storage</td><td><span class="pill pill-blue">SQLite (local)</span> <span class="pill pill-blue">PostgreSQL (enterprise)</span></td></tr>
+      <tr><td>Packaging</td><td><span class="pill pill-orange">Docker</span> <span class="pill pill-orange">pip package</span></td></tr>
+    </tbody>
+  </table>
+  <aside class="notes">We chose Python as the core because it has the richest AI and automation ecosystem. The stack is open-source-friendly with no mandatory paid services — LLM can run locally via LLaMA / Ollama.</aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 7 — TEAM & ROLES
+═══════════════════════════════════════════════════ -->
+<section>
+  <h2>Team &amp; Roles</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1em;margin-top:0.8em;">
+    <div class="role-card">
+      <h3>👤 Member 1 — You<br><span style="color:#90a4ae;font-weight:400;">(Project Lead)</span></h3>
+      <ul>
+        <li>Overall architecture &amp; roadmap</li>
+        <li>AI / LLM engine</li>
+        <li>Walk-through recorder</li>
+        <li>Test case generator</li>
+        <li>Self-healing AI module</li>
+        <li>Industry template library</li>
+      </ul>
+    </div>
+    <div class="role-card m2">
+      <h3>👤 Member 2<br><span style="color:#90a4ae;font-weight:400;">(Automation Engine)</span></h3>
+      <ul>
+        <li>Web automation (Playwright)</li>
+        <li>Desktop automation</li>
+        <li>Element fingerprinting</li>
+        <li>Visual diffing module</li>
+        <li>CI/CD plugin integration</li>
+        <li>Cross-browser / cross-OS</li>
+      </ul>
+    </div>
+    <div class="role-card m3">
+      <h3>👤 Member 3<br><span style="color:#90a4ae;font-weight:400;">(Platform &amp; UI)</span></h3>
+      <ul>
+        <li>No-code React dashboard</li>
+        <li>FastAPI backend</li>
+        <li>API testing engine</li>
+        <li>Database testing engine</li>
+        <li>Reporting &amp; analytics</li>
+        <li>Integrations (Jira, Slack)</li>
+      </ul>
+    </div>
+  </div>
+  <p style="margin-top:0.8em;font-size:0.72em;color:#78909c;">
+    Weekly 1-hour sync every Monday · Shared backlog on GitHub Projects · Branch-per-feature workflow
+  </p>
+  <aside class="notes">Three team members with clear ownership domains minimises merge conflicts and allows parallel progress. The weekly sync ensures alignment and blocker resolution.</aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 8 — MASTER TIMELINE
+═══════════════════════════════════════════════════ -->
+<section>
+  <h2>Master Timeline — July 2026 to March 2027</h2>
+  <div class="timeline" style="margin-top:1em;">
+    <div class="phase-box ph0">
+      <strong>Phase 0</strong>
+      Research &amp;<br>Architecture
+      <br><br>
+      <span>Jul 9 –<br>Aug 15, 2026</span>
+      <br><em style="color:#7986cb;">5.5 wks</em>
+    </div>
+    <div class="phase-box ph1">
+      <strong>Phase 1</strong>
+      Web + API<br>MVP
+      <br><br>
+      <span>Aug 16 –<br>Oct 31, 2026</span>
+      <br><em style="color:#66bb6a;">11 wks</em>
+    </div>
+    <div class="phase-box ph2">
+      <strong>Phase 2</strong>
+      Self-Healing<br>+ Desktop + DB
+      <br><br>
+      <span>Nov 1 –<br>Dec 31, 2026</span>
+      <br><em style="color:#ab47bc;">9 wks</em>
+    </div>
+    <div class="phase-box ph3">
+      <strong>Phase 3</strong>
+      Enterprise<br>Readiness
+      <br><br>
+      <span>Jan 1 –<br>Feb 28, 2027</span>
+      <br><em style="color:#ff7043;">8 wks</em>
+    </div>
+    <div class="phase-box ph4">
+      <strong>Phase 4</strong>
+      Stabilisation<br>&amp; Release
+      <br><br>
+      <span>Mar 1 –<br>Mar 31, 2027</span>
+      <br><em style="color:#90a4ae;">4 wks</em>
+    </div>
+  </div>
+  <p style="margin-top:1em;font-size:0.72em;color:#78909c;">
+    Total duration: <strong style="color:#e0e0e0;">37.5 weeks</strong> &nbsp;|&nbsp; Target release: <strong style="color:var(--ok);">March 31, 2027</strong>
+  </p>
+  <aside class="notes">Five phases from research to production release. Each phase has a clear deliverable, hard gate, and team-specific workstreams. Phases 1 through 4 run sequentially to allow dependencies to flow cleanly.</aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 9 — PHASE 0
+═══════════════════════════════════════════════════ -->
+<section>
+  <h2>Phase 0 — Research &amp; Architecture</h2>
+  <p style="color:#7986cb;font-size:0.8em;margin-top:0;"><strong>Jul 9 – Aug 15, 2026 &nbsp;(5.5 weeks)</strong></p>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8em;font-size:0.73em;">
+    <div style="background:rgba(121,134,203,0.1);border-radius:8px;padding:12px;">
+      <strong style="color:var(--accent);">Member 1</strong>
+      <ul style="margin-top:6px;line-height:1.7;">
+        <li>Competitive deep-dive report</li>
+        <li>AI engine architecture design</li>
+        <li>Core data model definitions</li>
+        <li>Monorepo setup &amp; CI skeleton</li>
+        <li>LLM prompt strategy</li>
+      </ul>
+    </div>
+    <div style="background:rgba(121,134,203,0.1);border-radius:8px;padding:12px;">
+      <strong style="color:var(--accent2);">Member 2</strong>
+      <ul style="margin-top:6px;line-height:1.7;">
+        <li>Playwright vs Selenium eval</li>
+        <li>Element fingerprint prototype</li>
+        <li>pywinauto vs PyAutoGUI eval</li>
+        <li>Web/Desktop module skeleton</li>
+      </ul>
+    </div>
+    <div style="background:rgba(121,134,203,0.1);border-radius:8px;padding:12px;">
+      <strong style="color:var(--warn);">Member 3</strong>
+      <ul style="margin-top:6px;line-height:1.7;">
+        <li>No-code UI wireframes (Figma)</li>
+        <li>FastAPI + React evaluation</li>
+        <li>API testing schema design</li>
+        <li>DB connector abstraction</li>
+      </ul>
+    </div>
+  </div>
+  <div style="margin-top:0.8em;background:rgba(129,199,132,0.1);border-radius:8px;padding:10px;font-size:0.75em;">
+    <strong style="color:var(--ok);">✅ Phase Gate Deliverable:</strong>
+    Architecture doc · Agreed module interfaces · All three skeletons committed · Shared data model
+  </div>
+  <aside class="notes">Phase 0 is entirely preparation. No feature code is delivered, but the quality of decisions made here determines the velocity of all subsequent phases.</aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 10 — PHASE 1
+═══════════════════════════════════════════════════ -->
+<section>
+  <h2>Phase 1 — Web + API MVP</h2>
+  <p style="color:#66bb6a;font-size:0.8em;margin-top:0;"><strong>Aug 16 – Oct 31, 2026 &nbsp;(11 weeks)</strong></p>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8em;font-size:0.72em;">
+    <div style="background:rgba(102,187,106,0.08);border-radius:8px;padding:12px;">
+      <strong style="color:var(--accent);">Member 1</strong>
+      <ul style="margin-top:6px;line-height:1.7;">
+        <li>Walk-through recorder (browser)</li>
+        <li>LLM test case generator</li>
+        <li>Test case manager (CRUD)</li>
+        <li>LangChain integration</li>
+      </ul>
+    </div>
+    <div style="background:rgba(102,187,106,0.08);border-radius:8px;padding:12px;">
+      <strong style="color:var(--accent2);">Member 2</strong>
+      <ul style="margin-top:6px;line-height:1.7;">
+        <li>Playwright web executor</li>
+        <li>3-tier locator strategy</li>
+        <li>Screenshot capture &amp; diff</li>
+        <li>Unit tests for executor</li>
+      </ul>
+    </div>
+    <div style="background:rgba(102,187,106,0.08);border-radius:8px;padding:12px;">
+      <strong style="color:var(--warn);">Member 3</strong>
+      <ul style="margin-top:6px;line-height:1.7;">
+        <li>No-code dashboard v1</li>
+        <li>API testing engine</li>
+        <li>Basic reporting module</li>
+        <li>FastAPI REST endpoints</li>
+      </ul>
+    </div>
+  </div>
+  <div style="margin-top:0.8em;background:rgba(129,199,132,0.1);border-radius:8px;padding:10px;font-size:0.75em;">
+    <strong style="color:var(--ok);">✅ Phase Gate Deliverable:</strong>
+    Record web walk-through → AI generates test cases → Execute in Playwright → Test APIs → View results in no-code UI
+  </div>
+  <aside class="notes">Phase 1 produces the first shippable demo. By end of October we should be able to show an investor or pilot customer a complete Web + API test cycle.</aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 11 — PHASE 2
+═══════════════════════════════════════════════════ -->
+<section>
+  <h2>Phase 2 — Self-Healing + Desktop + DB</h2>
+  <p style="color:#ab47bc;font-size:0.8em;margin-top:0;"><strong>Nov 1 – Dec 31, 2026 &nbsp;(9 weeks)</strong></p>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8em;font-size:0.72em;">
+    <div style="background:rgba(171,71,188,0.08);border-radius:8px;padding:12px;">
+      <strong style="color:var(--accent);">Member 1</strong>
+      <ul style="margin-top:6px;line-height:1.7;">
+        <li>Self-healing AI module</li>
+        <li>Failure analysis engine</li>
+        <li>Multi-user walk-throughs</li>
+        <li>Industry template library</li>
+      </ul>
+    </div>
+    <div style="background:rgba(171,71,188,0.08);border-radius:8px;padding:12px;">
+      <strong style="color:var(--accent2);">Member 2</strong>
+      <ul style="margin-top:6px;line-height:1.7;">
+        <li>Desktop engine (Win + cross-OS)</li>
+        <li>Desktop walk-through recorder</li>
+        <li>OpenCV visual matching</li>
+        <li>Self-healing integration</li>
+      </ul>
+    </div>
+    <div style="background:rgba(171,71,188,0.08);border-radius:8px;padding:12px;">
+      <strong style="color:var(--warn);">Member 3</strong>
+      <ul style="margin-top:6px;line-height:1.7;">
+        <li>Database testing engine</li>
+        <li>No-code dashboard v2</li>
+        <li>Healing review panel</li>
+        <li>Flakiness detection reports</li>
+      </ul>
+    </div>
+  </div>
+  <div style="margin-top:0.8em;background:rgba(129,199,132,0.1);border-radius:8px;padding:10px;font-size:0.75em;">
+    <strong style="color:var(--ok);">✅ Phase Gate Deliverable:</strong>
+    Self-healing works for web · Desktop testing functional · DB testing operational · Healing review UI live
+  </div>
+  <aside class="notes">Phase 2 is where the product becomes truly differentiated. Self-healing and desktop testing are capabilities that no open-source tool offers together.</aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 12 — PHASE 3
+═══════════════════════════════════════════════════ -->
+<section>
+  <h2>Phase 3 — Enterprise Readiness</h2>
+  <p style="color:#ff7043;font-size:0.8em;margin-top:0;"><strong>Jan 1 – Feb 28, 2027 &nbsp;(8 weeks)</strong></p>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8em;font-size:0.72em;">
+    <div style="background:rgba(255,112,67,0.08);border-radius:8px;padding:12px;">
+      <strong style="color:var(--accent);">Member 1</strong>
+      <ul style="margin-top:6px;line-height:1.7;">
+        <li>Parallel execution orchestrator</li>
+        <li>Natural language test authoring</li>
+        <li>AI test maintenance engine</li>
+        <li>Complete industry packs</li>
+      </ul>
+    </div>
+    <div style="background:rgba(255,112,67,0.08);border-radius:8px;padding:12px;">
+      <strong style="color:var(--accent2);">Member 2</strong>
+      <ul style="margin-top:6px;line-height:1.7;">
+        <li>CI/CD plugins (GH · Jenkins · GitLab)</li>
+        <li>Cross-browser grid execution</li>
+        <li>Mobile web (Playwright emulation)</li>
+        <li>Performance baseline recording</li>
+      </ul>
+    </div>
+    <div style="background:rgba(255,112,67,0.08);border-radius:8px;padding:12px;">
+      <strong style="color:var(--warn);">Member 3</strong>
+      <ul style="margin-top:6px;line-height:1.7;">
+        <li>Role-based access control</li>
+        <li>Test data management</li>
+        <li>Jira / Slack / TestRail connectors</li>
+        <li>Docker &amp; one-click deploy</li>
+      </ul>
+    </div>
+  </div>
+  <div style="margin-top:0.8em;background:rgba(129,199,132,0.1);border-radius:8px;padding:10px;font-size:0.75em;">
+    <strong style="color:var(--ok);">✅ Phase Gate Deliverable:</strong>
+    Enterprise-ready: CI/CD integrated · Industry packs live · RBAC active · Parallel execution working
+  </div>
+  <aside class="notes">Phase 3 turns the tool from a powerful prototype into an enterprise product. The CI/CD plugins and integrations are critical for adoption in corporate environments.</aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 13 — PHASE 4
+═══════════════════════════════════════════════════ -->
+<section>
+  <h2>Phase 4 — Stabilisation &amp; Release</h2>
+  <p style="color:#90a4ae;font-size:0.8em;margin-top:0;"><strong>Mar 1 – Mar 31, 2027 &nbsp;(4 weeks)</strong></p>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8em;font-size:0.73em;">
+    <div style="background:rgba(144,164,174,0.08);border-radius:8px;padding:12px;">
+      <strong style="color:var(--accent);">Member 1</strong>
+      <ul style="margin-top:6px;line-height:1.7;">
+        <li>End-to-end integration testing</li>
+        <li>AI engine documentation</li>
+        <li>BFSI + e-commerce demo</li>
+        <li>Performance &amp; reliability tests</li>
+      </ul>
+    </div>
+    <div style="background:rgba(144,164,174,0.08);border-radius:8px;padding:12px;">
+      <strong style="color:var(--accent2);">Member 2</strong>
+      <ul style="margin-top:6px;line-height:1.7;">
+        <li>Bug fixes for web/desktop</li>
+        <li>Automation engine docs</li>
+        <li>Performance benchmarks</li>
+        <li>Installation guide</li>
+      </ul>
+    </div>
+    <div style="background:rgba(144,164,174,0.08);border-radius:8px;padding:12px;">
+      <strong style="color:var(--warn);">Member 3</strong>
+      <ul style="margin-top:6px;line-height:1.7;">
+        <li>UI polish &amp; UX review</li>
+        <li>User documentation</li>
+        <li>Final Docker image</li>
+        <li>Project website &amp; demo video</li>
+      </ul>
+    </div>
+  </div>
+  <div style="margin-top:0.8em;background:rgba(129,199,132,0.1);border-radius:8px;padding:10px;font-size:0.75em;">
+    <strong style="color:var(--ok);">🚀 v1.0 Production Release: March 31, 2027</strong>
+  </div>
+  <aside class="notes">Phase 4 is a quality and polish sprint. No major features, only stability, documentation, and packaging. The goal is a release that can be confidently handed to any pilot customer.</aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 14 — RISKS & MITIGATIONS
+═══════════════════════════════════════════════════ -->
+<section>
+  <h2>Risks &amp; Mitigations</h2>
+  <table style="margin-top:0.6em;">
+    <thead><tr><th>Risk</th><th>Severity</th><th>Mitigation</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>LLM API cost &amp; reliability</td>
+        <td class="risk-high">High</td>
+        <td>Support local LLaMA / Ollama as free fallback</td>
+      </tr>
+      <tr>
+        <td>Desktop automation fragility across OS</td>
+        <td class="risk-high">High</td>
+        <td>Start Windows-only; add Linux/macOS in Phase 3</td>
+      </tr>
+      <tr>
+        <td>Self-healing false positives</td>
+        <td class="risk-med">Medium</td>
+        <td>Human approval panel before any auto-apply</td>
+      </tr>
+      <tr>
+        <td>Scope creep</td>
+        <td class="risk-med">Medium</td>
+        <td>Strict phase gates; mobile-native deferred to v2</td>
+      </tr>
+      <tr>
+        <td>Team bandwidth &amp; coordination</td>
+        <td class="risk-med">Medium</td>
+        <td>Weekly sync, shared backlog, clear ownership</td>
+      </tr>
+      <tr>
+        <td>Open-source licensing conflicts</td>
+        <td class="risk-ok">Low</td>
+        <td>License audit at Phase 0 completion</td>
+      </tr>
+    </tbody>
+  </table>
+  <aside class="notes">The two highest risks are LLM costs and desktop automation. Both have concrete mitigations planned. Self-healing accuracy is managed through human oversight rather than blind automation.</aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 15 — SUCCESS METRICS
+═══════════════════════════════════════════════════ -->
+<section>
+  <h2>Success Metrics</h2>
+  <div class="metric-grid" style="margin-top:0.8em;">
+    <div class="metric-card">
+      <div class="num">0</div>
+      <div class="lbl">Lines of code required<br>by end-users</div>
+    </div>
+    <div class="metric-card">
+      <div class="num">4</div>
+      <div class="lbl">Test types in one platform<br>(Web · Desktop · API · DB)</div>
+    </div>
+    <div class="metric-card">
+      <div class="num">&gt;80%</div>
+      <div class="lbl">Self-healing success rate<br>target for locator failures</div>
+    </div>
+    <div class="metric-card">
+      <div class="num">6</div>
+      <div class="lbl">Industries with ready-to-use<br>test template packs</div>
+    </div>
+    <div class="metric-card">
+      <div class="num">&lt;5 min</div>
+      <div class="lbl">Walk-through → first<br>executable test suite</div>
+    </div>
+    <div class="metric-card">
+      <div class="num">Mar 31</div>
+      <div class="lbl">v1.0 release target<br>date (2027)</div>
+    </div>
+  </div>
+  <aside class="notes">These six metrics will be our north stars. We will track them at each phase gate to ensure we are on course.</aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 16 — COLLABORATION TOOLS
+═══════════════════════════════════════════════════ -->
+<section>
+  <h2>Collaboration &amp; Tooling</h2>
+  <div class="two-col" style="margin-top:0.6em;font-size:0.82em;">
+    <div>
+      <h3>Development</h3>
+      <ul style="line-height:1.8;">
+        <li>🗂 <strong>GitHub</strong> — monorepo, branch-per-feature</li>
+        <li>📋 <strong>GitHub Projects</strong> — shared sprint board</li>
+        <li>🔁 <strong>GitHub Actions</strong> — CI pipeline</li>
+        <li>🐳 <strong>Docker</strong> — consistent dev environment</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Communication &amp; Design</h3>
+      <ul style="line-height:1.8;">
+        <li>💬 <strong>Slack</strong> — daily async standups</li>
+        <li>📅 <strong>Weekly 1-hr sync</strong> — every Monday</li>
+        <li>🎨 <strong>Figma</strong> — UI wireframes &amp; design</li>
+        <li>📝 <strong>Confluence / Notion</strong> — documentation</li>
+      </ul>
+    </div>
+  </div>
+  <div style="margin-top:0.8em;" class="quote-box">
+    "Clear ownership + minimal coordination overhead = maximum parallel velocity."
+  </div>
+  <aside class="notes">We have designed the collaboration model to maximise parallel work. Each team member has a primary domain and the weekly sync prevents drift.</aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 17 — PHASE 0 STATUS (ALREADY STARTED)
+═══════════════════════════════════════════════════ -->
+<section>
+  <h2>Phase 0 Progress — Already Started!</h2>
+  <p style="color:#7986cb;font-size:0.8em;margin-top:0;">We have not waited — Phase 0 kick-off work is underway</p>
+  <ul class="checks" style="font-size:0.85em;line-height:2.1;">
+    <li>Competitive landscape analysed &amp; documented</li>
+    <li>Core domain models implemented (<code>TestSuite, TestCase, TestStep, ElementLocator, HealingLog</code>)</li>
+    <li>In-memory test case manager (CRUD) built</li>
+    <li>Walk-through session &amp; event schema defined</li>
+    <li>AI generator skeleton + LLM prompt strategy drafted</li>
+    <li>Execution, self-healing, connector module skeletons committed</li>
+    <li>FastAPI entrypoint running (<code>/health · /suites</code>)</li>
+    <li>Unit test suite passing · 0 CodeQL security alerts</li>
+  </ul>
+  <aside class="notes">Good news for the team: we have a head start. The Python scaffold is already committed and tested, giving Members 2 and 3 clear module interfaces to build against immediately.</aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 18 — NEXT STEPS & DECISIONS
+═══════════════════════════════════════════════════ -->
+<section>
+  <h2>Next Steps &amp; Decisions Needed</h2>
+  <div class="two-col" style="margin-top:0.5em;font-size:0.8em;">
+    <div>
+      <h3 style="color:var(--ok);">Immediate Actions (This Week)</h3>
+      <ol style="line-height:1.9;">
+        <li>Approve team role assignments</li>
+        <li>Set up GitHub Project board</li>
+        <li>Schedule first Monday sync</li>
+        <li>Confirm LLM API access (OpenAI key or local GPU for LLaMA)</li>
+        <li>Each member commits their Phase 0 skeleton by Aug 15</li>
+      </ol>
+    </div>
+    <div>
+      <h3 style="color:var(--warn);">Decisions Required from Management</h3>
+      <ol style="line-height:1.9;">
+        <li>Budget approval for LLM API usage</li>
+        <li>Open-source vs proprietary licensing choice</li>
+        <li>Pilot customer / industry selection for Phase 1</li>
+        <li>Infrastructure for CI/CD (cloud vs on-prem)</li>
+        <li>Phase gate review cadence (monthly recommended)</li>
+      </ol>
+    </div>
+  </div>
+  <aside class="notes">We need two decisions from management today: LLM budget approval and the licensing model. Both affect Phase 0 architecture decisions.</aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 19 — CLOSE / THANK YOU
+═══════════════════════════════════════════════════ -->
+<section class="title-slide">
+  <br><br>
+  <h1 style="font-size:1.6em;">Thank You</h1>
+  <p class="tagline">Questions &amp; Discussion</p>
+  <hr style="border-color:#37474f;margin:1.2em auto;width:60%">
+  <div style="font-size:0.82em;color:#90caf9;line-height:2;">
+    <p>📁 Repository: <code>udaraas/github-slideshow</code></p>
+    <p>📂 Framework scaffold: <code>ai_test_framework/</code></p>
+    <p>📊 This presentation: <code>presentation/index.html</code></p>
+  </div>
+  <p class="meta">NextGen Test Automation Team &nbsp;|&nbsp; July 2026</p>
+  <aside class="notes">Thank you. I am happy to walk through any slide in more detail or answer questions about the technical decisions or timeline assumptions.</aside>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    progress: true,
+    controls: true,
+    slideNumber: 'c/t',
+    transition: 'slide',
+    backgroundTransition: 'fade',
+    center: true,
+    width: 1100,
+    height: 900,
+    margin: 0.08,
+  });
+</script>
+</body>
+</html>
