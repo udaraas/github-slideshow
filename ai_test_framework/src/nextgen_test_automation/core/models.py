@@ -18,6 +18,13 @@ class StepAction(str, Enum):
     ASSERT = "assert"
     API_CALL = "api_call"
     DB_QUERY = "db_query"
+    SCREENSHOT = "screenshot"
+    WAIT = "wait"
+    SELECT = "select"
+    HOVER = "hover"
+    SCROLL = "scroll"
+    KEY_PRESS = "key_press"
+    ACCESSIBILITY_SCAN = "accessibility_scan"
 
 
 @dataclass(slots=True)
